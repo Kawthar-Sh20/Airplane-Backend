@@ -10,7 +10,7 @@ $param = key($queryParams);
 if (isset($param) && !empty($param)) {
     $value = $queryParams[$param];
 }
-
+ 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($param) && isset($value)) {
         if (isset($_GET['total']) && !empty($_GET['total']) && $_GET['total'] > 0) {
