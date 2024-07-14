@@ -23,7 +23,13 @@ class selectModel {
 		}
 		return "SELECT * FROM $table WHERE $param = ?;";
 	}
+    
+    public static function insert($table, $data) {
+        $columns = implode(", ", array_keys($data));
+        $placeholders = implode(", ", array_fill(0, count($data), "?"));
+        return "INSERT INTO $table ($columns) VALUES ($placeholders);";
+    }
 
-
+ 
     
 }
