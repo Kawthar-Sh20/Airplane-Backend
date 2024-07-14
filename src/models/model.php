@@ -1,7 +1,7 @@
 <?php
 
 class selectModel {
-    private static $allowedTables = ['hotels', 'flights', 'airpots', 'users', 'taxis'];
+    private static $allowedTables = ['hotels', 'flights', 'airpots', 'users', 'taxis', 'hotel_bookings', 'flight_bookings', 'taxi_bookings'];
     private static $allowedColumns = ['id', 'rating', 'city', 'country', 'name', 'description', 'id_airport', 'id_user', 'id_flight', 'id_taxi'];
 
     public static function isValidTable($table) {
