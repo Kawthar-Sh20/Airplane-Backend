@@ -49,7 +49,21 @@ class selectService {
 	}
 
 ////////////////////////////////////////////////////////////////
-
+public static function insert($conn, $table_name, $data) {
+	// Build the SQL query
+	$columns = implode(", ", array_keys($data));
+	$values = implode(", ", array_map(function($value) use ($conn) {
+		return "'" . mysqli_real_escape_string($conn, $value) . "'";
+	}, array_values($data)));
+	
+	$sql = "INSERT INTO $table_name ($columns) VALUES ($values)";
+	
+	if (mysqli_query($conn, $sql)) {
+		echo json_encode(["message" => "Record inserted successfully"]);
+	} else {
+		echo json_encode(["message" => "Error inserting record: " . mysqli_error($conn)]);
+	}
+}
 
 		//////////////////////////
     }
