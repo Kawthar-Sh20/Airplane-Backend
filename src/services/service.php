@@ -44,8 +44,15 @@ class selectService {
 		} else {
 			echo json_encode(["message" => "Products not found"]);
 		}
+
+		
 	}
 
+////////////////////////////////////////////////////////////////
+
+
+		//////////////////////////
+    }
 	// public static function selectAll($conn, $table) {
 	// 	$query = selectModel::selectAll($table);
 	// 	$stmt = $conn->prepare($query);
@@ -63,4 +70,3 @@ class selectService {
 	// 	}
 	// }
 
-}

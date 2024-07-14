@@ -1,5 +1,4 @@
 <?php
-
 require "connection.php";
 require "src/services/service.php";
 $requestUri = $_SERVER['REQUEST_URI'];
