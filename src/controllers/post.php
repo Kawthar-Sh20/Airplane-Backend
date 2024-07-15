@@ -41,14 +41,27 @@ echo "Value: " . $value . "<br>";
 
 // Handle POST request
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $inputData = json_decode(file_get_contents("php://input"), true);
+    $rawInputData = file_get_contents("php://input");
+    $inputData = json_decode($rawInputData, true);
+
+    // Debugging input data
+    echo "Raw input data: " . $rawInputData . "<br>";
+    echo "Decoded input data: ";
+    print_r($inputData);
+    echo "<br>";
 
     if (!empty($inputData) && is_array($inputData)) {
         // Handle insertion
         $sql = selectModel::insert($table_name, $inputData);
+        echo "Generated SQL: " . $sql . "<br>";
         $stmt = $conn->prepare($sql);
 
-        $types = str_repeat("s", count($inputData)); // assuming all inputs are strings, adjust as necessary
+        $types = str_repeat("s", count($inputData)); // Assuming all inputs are strings, adjust as necessary
+        echo "Bind types: " . $types . "<br>";
+        echo "Bind values: ";
+        print_r(array_values($inputData));
+        echo "<br>";
+
         $stmt->bind_param($types, ...array_values($inputData));
 
         if ($stmt->execute()) {
@@ -57,24 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo json_encode(["message" => "Error inserting record: " . $stmt->error]);
         }
     } else {
-        // Handle selection
-        if (isset($param) && isset($value)) {
-            if (isset($_GET['limit']) && !empty($_GET['limit']) && $_GET['limit'] > 0) {
-                $stmt = $conn->prepare(selectModel::select($table_name, $param) . " LIMIT ?");
-                $stmt->bind_param("i", $_GET['limit']);
-            } else {
-                $stmt = $conn->prepare(selectModel::select($table_name, $param));
-            }
-            $stmt->bind_param("s", $value);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            echo json_encode($result->fetch_all(MYSQLI_ASSOC));
-        } else {
-            $result = $conn->query(selectModel::selectAll($table_name));
-            echo json_encode($result->fetch_all(MYSQLI_ASSOC));
-        }
+        echo json_encode(["message" => "Invalid input data"]);
     }
-} else {
-    echo json_encode(["message" => "Method not allowed"]);
 }
-?>

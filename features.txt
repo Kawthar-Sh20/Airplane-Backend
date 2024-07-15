@@ -72,7 +72,7 @@ Software Architecture
 	Chat API (GET & POST): (Maybe add SSH connection to secure transactions between FE and BE? Because only the FE client should be able to access this API, not even the user or admin)
 	- Add conversation to db
 	- Retreive conversation from db
-
+=
 ### Public APIs/Layers:
 	Admin: APIs for flights, hotels, taxis, airports and users (/api/).
 	- Read: Done
