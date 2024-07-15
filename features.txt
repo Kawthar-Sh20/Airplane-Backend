@@ -69,10 +69,10 @@ Software Architecture
 		b. Checks for authentication
 		c. Checks if user token is expired and redirects them to the user login page
 
-	2. Chat API (GET & POST): (Maybe add SSH connection to secure transactions between FE and BE? Because only the FE client should be able to access this API, not even the user or admin)
-		a. Add conversation to db
-		b. Retreive conversation from db
-
+	Chat API (GET & POST): (Maybe add SSH connection to secure transactions between FE and BE? Because only the FE client should be able to access this API, not even the user or admin)
+	- Add conversation to db
+	- Retreive conversation from db
+=
 ### Public APIs/Layers:
 	1. flights, hotels, taxis, airports (/api/):
 		a. Read: Done
@@ -101,6 +101,10 @@ Software Architecture
 		c. Returns JWT token for existing users that are logging in, otherwise returns new token for newly registered users (only after creating new user)
 		d. Stores the JWT token in localStorage (on the frontend)
 
+	
+//me   get city for user condition when booking private only chat bot can access 
+	Chatbot API to get user data:
+	- Get user data to be able to provide recommendations based on user data
 	6. Chatbot API to get user data:
 		a. Get user data to be able to provide recommendations based on user data
 
@@ -135,6 +139,8 @@ Software Architecture
 5. most other read update delete methods
 6. Add logic to switch to Admin panel if user is admin (by checking JWT token)
 
+
+extraaaaa
 *** For Tuesday
 1. Refactor into classes
 2. Create and validate requests against DTOs

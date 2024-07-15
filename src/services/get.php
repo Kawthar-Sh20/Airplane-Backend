@@ -45,22 +45,22 @@ class selectService {
 			echo json_encode(["message" => "Items not found"]);
 		}
 	}
-
+/////////////////////////////////
 	public static function insert($conn, $table_name, $data) {
-		$columns = implode(", ", array_keys($data));
-		$values = implode(", ", array_map(function($value) use ($conn) {
-			return "'" . mysqli_real_escape_string($conn, $value) . "'";
-		}, array_values($data)));
-		
-		$sql = "INSERT INTO $table_name ($columns) VALUES ($values)";
-		
-		if (mysqli_query($conn, $sql)) {
-			echo json_encode(["message" => "Record inserted successfully"]);
-		} else {
-			echo json_encode(["message" => "Error inserting record: " . mysqli_error($conn)]);
-		}
-	}
-
+        $columns = implode(", ", array_keys($data));
+        $values = implode(", ", array_map(function($value) use ($conn) {
+            return "'" . mysqli_real_escape_string($conn, $value) . "'";
+        }, array_values($data)));
+        
+        $sql = "INSERT INTO $table_name ($columns) VALUES ($values)";
+        
+        if (mysqli_query($conn, $sql)) {
+            echo json_encode(["message" => "Record inserted successfully"]);
+        } else {
+            echo json_encode(["message" => "Error inserting record: " . mysqli_error($conn)]);
+        }
+    }
+///////////////////
 	public static function delete($conn, $table, $param, $value) {
 		if (!selectModel::isValidColumn($param)) {
 			die("Invalid column name");

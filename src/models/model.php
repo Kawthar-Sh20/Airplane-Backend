@@ -23,10 +23,16 @@ class selectModel {
 	}
     
     public static function insert($table, $data) {
+        if (!is_array($data)) {
+            throw new InvalidArgumentException("Data must be an array.");
+        }
+        
         $columns = implode(", ", array_keys($data));
         $placeholders = implode(", ", array_fill(0, count($data), "?"));
-        return "INSERT INTO $table ($columns) VALUES ($placeholders);";
+        return "INSERT INTO $table ($columns) VALUES ($placeholders)";
     }
+
+
 
     //////////////////////
     public static function delete($table, $param) {
