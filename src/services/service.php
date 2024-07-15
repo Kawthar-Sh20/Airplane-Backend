@@ -45,7 +45,7 @@ class selectService {
 			echo json_encode(["message" => "Items not found"]);
 		}
 	}
-	
+
 	public static function insert($conn, $table_name, $data) {
 		$columns = implode(", ", array_keys($data));
 		$values = implode(", ", array_map(function($value) use ($conn) {

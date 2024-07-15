@@ -58,44 +58,86 @@ Database Tables:
 Software Architecture
 - Create the project Architecture following the c4 model.
 
-APIs:
-	Admin: APIs for flights, hotels, taxis, airports and users.
+
+
+
+
+
+### Private APIs/Layers:
+	Gateway:
+	- Routes Requests: **Done for GET** **Done for all**
+	- Checks for authentication
+	- Checks if user token is expired and redirects them to the user login page
+
+	Chat API (GET & POST): (Maybe add SSH connection to secure transactions between FE and BE? Because only the FE client should be able to access this API, not even the user or admin)
+	- Add conversation to db
+	- Retreive conversation from db
+
+### Public APIs/Layers:
+	Admin: APIs for flights, hotels, taxis, airports and users (/api/).
 	- Read: Done
 	- Create: 
 	- Update: 
 	- Delete: 
 
-	Users:
-	- Create account (no need for authentication)
-	- User information (requires authentication):
+	Users (/api/users):
+	- Create account (POST)
+	- User information:
 		a. Read: Done
 		b. Update: 
 		c. Delete:
-	- All bookings (accept only user Id for requests)  (flight, hotels, taxis):
+	- All bookings (only accept requests from logged-in user, APIs should check if logged-in user matches user id in the request, check if user ID matches user in JWT token )  (flight, hotels, taxis):
 		a. Read: Done
 		b. Create:
-		c. Update:
+		c. Update: ***DO NOT IMPLEMENT***
 		d. Delete:
 
-	
 	Search: (By category, or city, expand to allow for multiple parameters?)
 	- Read: Done for single parameter, default limit = 10.
 
-	Gateway:
-	- Routes Requests: **Done for GET**
-	- Checks for authentication
-
-	Authentication API:
-	- Returns JWT token for users
-	- Stores the JWT token in localStorage
+	Authentication API (POST /api/auth):
+	- Triggered only when logging in or after creating a new account
+	- Checks if credentials are valid
+	- Returns JWT token for existing users that are logging in, otherwise returns new token for newly registered users (only after creating new user)
+	- Stores the JWT token in localStorage (on the frontend)
 
 	Chatbot API to get user data:
 	- Get user data to be able to provide recommendations based on user data
 
-	Chat API (GET & POST):
-	- Add conversation to db
-	- Retreive conversation from db
 
-// api/flight_bookings
-// api/hotel_bookings
-// api/taxi_bookings
+*********************************************
+	Authentication/Authorization requirements:
+	- No authentication: 
+		a. /api/users (POST)
+		b. /api/auth (POST)
+		c. Search (/api/flights || /api/hotels || /api/taxis) (any city)
+	- User level: 
+		a. Chatbot API (requires the user to be logged-in in order to access user data based on user ID)
+		b. User information: 
+			1. (GET, PUT, DELETE) /api/users?id=
+		c. User bookings (Implement logic to check if user ID in url param matches user in JWT and only accept those requests):
+			1. (GET, POST, DELETE) /api/flight_bookings?user_id=
+			2. (GET, POST, DELETE) /api/hotel_bookings?user_id=
+			3. (GET, POST, DELETE) /api/taxi_bookings?user_id=
+	- Admin level: 
+		a. Categories: (POST, PUT, DELETE)
+			1. /api/flights
+			2. /api/hotels
+			3. /api/taxis
+		b. Users: /api/users (GET, POST, PUT, DELETE)
+		c. Airports: /api/airports (GET, POST, PUT, DELETE)
+
+*** To implement tomorrow:
+1. BCrypt
+2. Authentication API
+3. Authentication validator (for gateway)
+4. Authorization levels
+5. most other read update delete methods
+6. Add logic to switch to Admin panel if user is admin (by checking JWT token)
+
+*** For Tuesday
+1. Refactor into classes
+2. Create and validate requests against DTOs
+3. Add ORM
+4. Document APIs
+
