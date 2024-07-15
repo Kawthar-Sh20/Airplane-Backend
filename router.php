@@ -38,4 +38,5 @@ if (strpos($requestUri, $apiBasePath) === 0) {
     echo "404 Not Found";
 }
 
-?>
+
+
