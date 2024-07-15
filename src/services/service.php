@@ -4,8 +4,8 @@ require 'src/models/model.php';
 
 class selectService {
 	public static function select($conn, $table, $param, $value, $limit = null) {
-		if (!selectModel::isValidTable($table) || !selectModel::isValidColumn($param)) {
-            die("Invalid table or column name");
+		if (!selectModel::isValidColumn($param)) {
+            die("Invalid column name");
         }
 
 		$query = selectModel::select($table, $param);
@@ -22,9 +22,9 @@ class selectService {
 				$rows[] = $row;
 				$limit--;
 			}
-			echo json_encode(["products" => $rows]);
+			echo json_encode(["data" => $rows]);
 		} else {
-			echo json_encode(["message" => "Product not found"]);
+			echo json_encode(["message" => "Item not found"]);
 		}
 	}
 
@@ -40,27 +40,9 @@ class selectService {
 				$rows[] = $row;
 				$limit--;
 			}
-			echo json_encode(["products" => $rows]);
+			echo json_encode(["data" => $rows]);
 		} else {
-			echo json_encode(["message" => "Products not found"]);
+			echo json_encode(["message" => "Items not found"]);
 		}
 	}
-
-	// public static function selectAll($conn, $table) {
-	// 	$query = selectModel::selectAll($table);
-	// 	$stmt = $conn->prepare($query);
-	// 	$stmt->execute();
-	// 	$result = $stmt->get_result();
-
-	// 	if ($result->num_rows > 0) {
-	// 		$rows = [];
-	// 		while ($row = $result->fetch_assoc()) {
-	// 			$rows[] = $row;
-	// 		}
-	// 		echo json_encode(["products" => $rows]);
-	// 	} else {
-	// 		echo json_encode(["message" => "Products not found"]);
-	// 	}
-	// }
-
 }

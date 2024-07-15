@@ -1,0 +1,101 @@
+UI:
+- search bar (reusable)
+- landing page (parallex, spline (read description), basic styling and animations for user interactions)
+- login page
+- register user page
+- user portal
+- admin management panel
+
+User (requires login):
+- Dashboard
+- For flights, hotels, taxis implement:
+	a. Search (show availability status for each flight, hotel, taxi)
+	b. Booking (form)
+	c. Cancelation (form or button)
+	e. AI recommendations
+	e. Display booking confirmation and details to users (confirm to the user his flight? or confirm the flight before payment?)
+
+Admin (requires admin access):
+- Dashboard
+- Airport management page
+- Flights management page
+- Hotels management page
+- Taxis management page
+- Users management page
+
+AI Trip Planner Bot:
+- Integrate OpenAI model using API Keys
+- Read bookings and provide trip plans based on flight, hotel and bookings
+- Implement the trip planning algorithm in PHP
+- Create a chatbot interface for user interactions
+Ask Chris Which one?
+- Allow the bot to provide trip plans based on flight, hotel, and taxi bookings.
+- Use OpenAI to suggest trip plans considering flight schedules, hotel availability, and taxi services.
+- Implement recommendations for hotels, car rentals, and tourist attractions at the destination.
+
+Notes:
+- Enable dynamic content updates using DOM manipulation
+- Validate all forms
+- Create airplane animations for takeoff, landing and in-flight views
+- Add interactive elements to spline scenes
+- Validate data on the backend for each request, and implement integrity constraints
+- create .env file to store credentials and sensitive information
+- Ensure Spline interactions are integrated with the frontend logic (ask chris?)
+- Test all features thoroughly...
+
+Database Tables:
+- Cities (links to airports, flights, hotels, taxis)
+- Airports
+- Flights (add capacity and reserved_seats rows)
+- Bookings
+- Hotels (add capacity and reserved_rooms rows, special feature: check which rooms can be booked individually)
+- Rooms (optional)
+- Taxis
+- Users
+- Chats_Users (for all users)
+- Chats (for each user)
+
+Software Architecture
+- Create the project Architecture following the c4 model.
+
+APIs:
+	Admin: APIs for flights, hotels, taxis, airports and users.
+	- Read: Done
+	- Create: 
+	- Update: 
+	- Delete: 
+
+	Users:
+	- Create account (no need for authentication)
+	- User information (requires authentication):
+		a. Read: Done
+		b. Update: 
+		c. Delete:
+	- All bookings (accept only user Id for requests)  (flight, hotels, taxis):
+		a. Read: Done
+		b. Create:
+		c. Update:
+		d. Delete:
+
+	
+	Search: (By category, or city, expand to allow for multiple parameters?)
+	- Read: Done for single parameter, default limit = 10.
+
+	Gateway:
+	- Routes Requests: **Done for GET**
+	- Checks for authentication
+
+	Authentication API:
+	- Returns JWT token for users
+	- Stores the JWT token in localStorage
+
+	Chatbot API to get user data:
+	- Get user data to be able to provide recommendations based on user data
+
+	Chat API (GET & POST):
+	- Add conversation to db
+	- Retreive conversation from db
+
+// api/flight_bookings
+// api/hotel_bookings
+// api/taxi_bookings
