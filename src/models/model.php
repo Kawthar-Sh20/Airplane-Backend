@@ -28,6 +28,12 @@ class selectModel {
         return "INSERT INTO $table ($columns) VALUES ($placeholders);";
     }
 
+    //////////////////////
+    public static function delete($table, $param) {
+        return "DELETE FROM $table WHERE $param = ?;";
+    }
+    
+    /////////////////////
  
     
 }

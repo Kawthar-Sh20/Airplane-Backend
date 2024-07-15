@@ -60,4 +60,24 @@ class selectService {
 			echo json_encode(["message" => "Error inserting record: " . mysqli_error($conn)]);
 		}
 	}
+
+	public static function delete($conn, $table, $param, $value) {
+		if (!selectModel::isValidColumn($param)) {
+			die("Invalid column name");
+		}
+	
+		$query = selectModel::delete($table, $param);
+		$stmt = $conn->prepare($query);
+	
+		$param == 'id' ? $stmt -> bind_param('i', $value) : $stmt -> bind_param('s', $value);
+	
+		$stmt->execute();
+	
+		if ($stmt->affected_rows > 0) {
+			echo json_encode(["message" => "Record deleted successfully"]);
+		} else {
+			echo json_encode(["message" => "Item not found or could not be deleted"]);
+		}
+	}
+	
 }
