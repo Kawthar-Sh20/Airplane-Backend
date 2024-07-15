@@ -1,4 +1,13 @@
 <?php
+header("Access-Control-Allow-Origin: *"); // Allow access from any origin
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS"); // Allow these request methods
+header("Access-Control-Allow-Headers: Content-Type, Authorization"); // Allow these headers
+
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    // Handle preflight request
+    http_response_code(200);
+    exit;
+}
 echo("Router script reached.");
 
 $apiBasePath = '/api/';

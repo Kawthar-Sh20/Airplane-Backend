@@ -1,4 +1,5 @@
 <?php
+
 define('ROOT_PATH', dirname(__DIR__, 2)); // Adjust this if necessary
 
 // Use the absolute path to require the connection.php file
