@@ -7,11 +7,9 @@ require_once ROOT_PATH . "/connection.php";
 require_once ROOT_PATH . "/src/services/service.php";
 require_once ROOT_PATH . "/src/models/model.php"; // make sure to require your model file
 //////////////////////////////////////////////////////////////
-
 $requestUri = $_SERVER['REQUEST_URI'];
 $requestUri = strtok($requestUri, '?');
 $segments = explode('/', $requestUri);
-
 
 // Debug information
 echo "Request URI: " . $requestUri . "<br>";
@@ -27,7 +25,6 @@ $value = $_GET[$param] ?? null;
 // More debug information
 echo "Table Name: " . $table_name . "<br>";
 echo "Is Valid Table: " . (selectModel::isValidTable($table_name) ? "Yes" : "No") . "<br>";
-
 
 // ////////////////////////////////////////////////////////////
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
