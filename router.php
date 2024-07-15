@@ -1,7 +1,7 @@
 <?php
-header("Access-Control-Allow-Origin: *"); // Allow access from any origin
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS"); // Allow these request methods
-header("Access-Control-Allow-Headers: Content-Type, Authorization"); // Allow these headers
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     // Handle preflight request
