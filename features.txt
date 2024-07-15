@@ -101,6 +101,8 @@ Software Architecture
 	- Returns JWT token for existing users that are logging in, otherwise returns new token for newly registered users (only after creating new user)
 	- Stores the JWT token in localStorage (on the frontend)
 
+	
+//me   get city for user condition when booking private only chat bot can access 
 	Chatbot API to get user data:
 	- Get user data to be able to provide recommendations based on user data
 
@@ -135,6 +137,8 @@ Software Architecture
 5. most other read update delete methods
 6. Add logic to switch to Admin panel if user is admin (by checking JWT token)
 
+
+extraaaaa
 *** For Tuesday
 1. Refactor into classes
 2. Create and validate requests against DTOs
