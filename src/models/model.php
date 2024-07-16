@@ -39,4 +39,8 @@ class selectModel {
     public static function delete($table, $param) {
         return "DELETE FROM $table WHERE $param = ?;";
     }
+    
+    /////////////////////
+ 
+    
 }
