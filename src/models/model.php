@@ -32,13 +32,16 @@ class selectModel {
         return "INSERT INTO $table ($columns) VALUES ($placeholders)";
     }
 
+    public static function openAI($table1,$table2,){
+        
+    }
+
 
 
     //////////////////////
     public static function delete($table, $param) {
         return "DELETE FROM $table WHERE $param = ?;";
     }
-    
     /////////////////////
  
     

@@ -39,7 +39,7 @@ if (strpos($requestUri, $apiBasePath) === 0) {
         } elseif ($requestMethod === 'DELETE') {
             require __DIR__ . '/src/controllers/delete.php';
         } 
-    
+        
         else {
             header("HTTP/1.0 405 Method Not Allowed");
             echo "405 Method Not Allowed";
