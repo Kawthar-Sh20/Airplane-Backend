@@ -43,8 +43,10 @@ if (strpos($requestUri, $apiBasePath) === 0) {
             require __DIR__ . '/src/controllers/put.php';
         } elseif ($requestMethod === 'DELETE') {
             require __DIR__ . '/src/controllers/delete.php';
-        } elseif($requestMethod === 'GET' && isset($_GET['openAI'])) {
+        } elseif($requestMethod === 'GET' && isset($_GET['openAIGet'])) {
             require __DIR__ . '/src/controllers/openAIGet.php';    
+        } elseif($requestMethod=== 'POST'&& isset($_POST['openAIPost'])) {
+            require __DIR__ .'/src/controllers/openAIPost.php';
         }
         
         else {
