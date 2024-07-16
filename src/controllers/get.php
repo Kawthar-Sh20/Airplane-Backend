@@ -1,6 +1,6 @@
 <?php
 require "connection.php";
-require "src/services/service.php";
+require "src/services/get.php";
 
 $requestUri = $_SERVER['REQUEST_URI'];
 $requestUri = strtok($requestUri, '?');
