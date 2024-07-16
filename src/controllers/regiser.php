@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         echo json_encode(["error" => "Already exists"]);
     } else {
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        
         $stmt = $conn->prepare('insert into users(name,username,email,password) values (?,?,?,?); ');
         $stmt->bind_param('ssss', $name, $username, $email, $hashed_password);
         $stmt->execute();

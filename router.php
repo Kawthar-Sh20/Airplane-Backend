@@ -1,25 +1,26 @@
 <?php
-header("Access-Control-Allow-Origin: *"); // Allow access from any origin
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS"); // Allow these request methods
-header("Access-Control-Allow-Headers: Content-Type, Authorization"); // Allow these headers
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     // Handle preflight request
     http_response_code(200);
     exit;
 }
-echo("Router script reached.");
 
 $apiBasePath = '/api/';
 
 $allowedEndpoints = [
+    'auth/login',
+    'auth/register',
+    'users',
+    'airports',
+    'flights',
     'hotels',
     'taxis',
-    'flights',
-    'airports',
-    'users',
-    'hotel_bookings',
     'flight_bookings',
+    'hotel_bookings',
     'taxi_bookings'
 ];
 
@@ -30,7 +31,11 @@ if (strpos($requestUri, $apiBasePath) === 0) {
     $endpoint = substr($requestUri, strlen($apiBasePath));
     
     if (in_array($endpoint, $allowedEndpoints)) {
-        if ($requestMethod === 'GET') {
+        if ($requestUri === '/api/auth/login' && $requestMethod === 'POST') {
+            require __DIR__ . '/src/controllers/login.php';
+        } elseif ($requestUri === '/api/auth/register' && $requestMethod === 'POST') {
+            require __DIR__ . '/src/controllers/register.php';
+        } elseif ($requestMethod === 'GET') {
             require __DIR__ . '/src/controllers/get.php';
         } elseif ($requestMethod === 'POST') {
             require __DIR__ . '/src/controllers/post.php';
@@ -52,6 +57,3 @@ if (strpos($requestUri, $apiBasePath) === 0) {
     header("HTTP/1.0 404 Not Found");
     echo "404 Not Found";
 }
-
-
-
