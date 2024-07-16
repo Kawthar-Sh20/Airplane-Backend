@@ -1,34 +1,26 @@
 <?php
-require '../connection.php';
+require_once 'auth_service.php';
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+function login() {
+    $json = file_get_contents('php://input');
+    $data = json_decode($json, true);
 
-    $stmt = $conn->prepare('select id,email,password,name
-    from users 
-    where email=?');
-    $stmt->bind_param('s', $email);
-    $stmt->execute();
-    $stmt->store_result();
-    $stmt->bind_result($id, $email, $hashed_password, $name);
-    $stmt->fetch();
-    $user_exists = $stmt->num_rows;
-
-    if ($user_exists == 0) {
-        $res['message'] = "user not found";
-    } else {
-
-        if (password_verify($password, $hashed_password)) {
-            $res['status'] = 'authenticated';
-            $res['id'] = $id;
-            $res['name'] = $name;
-            $res['email'] = $email;
-        } else {
-            $res['status'] = "wrong password";
-        }
+    if (!isset($data['email']) || !isset($data['password'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Email and password are required']);
+        return;
     }
-} else {
-    echo json_encode(["error" => "Wrong request method"]);
+
+    $email = $data['email'];
+    $password = $data['password'];
+
+    $result = loginUser($email, $password);
+
+    if ($result['success']) {
+        http_response_code(200);
+        echo json_encode(['token' => $result['token']]);
+    } else {
+        http_response_code(401);
+        echo json_encode(['error' => 'Invalid credentials']);
+    }
 }
-echo json_encode($res);

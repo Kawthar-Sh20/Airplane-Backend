@@ -147,3 +147,47 @@ extraaaaa
 3. Add ORM
 4. Document APIs
 5. Create dynamic url that accept different order of parameters
+
+***********************************************************
+
+Responsibilities of controllers, services, and models in an application. 
+
+This separation of concerns is a common architectural pattern, often associated with the Model-View-Controller (MVC) pattern and its variants.
+
+Controller:
+
+- Acts as an interface between the user interface (or client requests) and the application logic
+- Handles incoming requests (e.g., HTTP requests in web applications)
+- Processes input data and validates it at a basic level
+- Calls appropriate services to perform business logic
+- Prepares and returns the response (e.g., JSON data, HTML, redirects)
+- Does not contain business logic itself
+- Manages the flow of the application
+
+Service:
+
+- Contains the core business logic of the application
+- Performs complex operations and computations
+- Coordinates between multiple models if necessary
+- Implements application-specific rules and workflows
+- Can call other services if needed
+- Often used to keep controllers thin and focused on request handling
+- Provides a layer of abstraction between controllers and models
+
+Model:
+
+- Represents the data structure of the application
+- Defines how data is stored, retrieved, and manipulated
+- Implements data validation rules
+- Interacts directly with the database or data storage
+- Can include simple query methods, but complex queries often go in services
+- Should be independent of the user interface
+
+This separation of concerns offers several benefits:
+
+- Improved maintainability: Changes in one layer don't necessarily affect others
+- Better testability: Each component can be tested in isolation
+- Increased reusability: Services and models can be used by multiple controllers
+- Clearer organization: Each part of the application has a distinct role
+
+In practice, the boundaries between these components can sometimes blur, especially in smaller applications. However, maintaining this separation as much as possible generally leads to more scalable and manageable code.
