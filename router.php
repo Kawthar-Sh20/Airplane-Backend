@@ -43,7 +43,9 @@ if (strpos($requestUri, $apiBasePath) === 0) {
             require __DIR__ . '/src/controllers/put.php';
         } elseif ($requestMethod === 'DELETE') {
             require __DIR__ . '/src/controllers/delete.php';
-        } 
+        } elseif($requestMethod === 'GET' && isset($_GET['openAI'])) {
+            require __DIR__ . '/src/controllers/openAIGet.php';    
+        }
         
         else {
             header("HTTP/1.0 405 Method Not Allowed");
