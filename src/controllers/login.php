@@ -1,5 +1,5 @@
 <?php
-require_once 'auth_service.php';
+require_once 'src/services/login.php';
 
 function login() {
     $json = file_get_contents('php://input');
@@ -14,7 +14,8 @@ function login() {
     $email = $data['email'];
     $password = $data['password'];
 
-    $result = loginUser($email, $password);
+    $authService = new LoginService();
+    $result = authService->login($email, $password);
 
     if ($result['success']) {
         http_response_code(200);

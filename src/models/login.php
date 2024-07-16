@@ -1,6 +1,6 @@
 <?php
 
-class loginModel {
+class LoginModel {
     private $db;
 
     public function __construct() {
@@ -9,7 +9,7 @@ class loginModel {
         $password = getenv('DB_PASSWORD');
         $database = getenv('DB_NAME');
 
-        $conn = new mysqli($host, $username, $password, $database);
+        $this->db = new mysqli($host, $username, $password, $database);
 
         if ($this->db->connect_error) {
             die("Connection failed: " . $this->db->connect_error);
@@ -18,11 +18,11 @@ class loginModel {
         }
     }
 
-    public function getUserByUsername($username) {
-        $stmt = $this->db->prepare("SELECT id, username, password_hash, email, role FROM users WHERE username = ?");
+    public function getUserByUsername($email) {
+        $stmt = $this->db->prepare("SELECT id, username, password_hash, email, role FROM users WHERE email = ?");
         
         // Bind the username parameter
-        $stmt->bind_param("s", $username);
+        $stmt->bind_param("s", $email);
 
         // Execute the statement
         $stmt->execute();
