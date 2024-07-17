@@ -1,0 +1,196 @@
+UI:
+- search bar (reusable)
+- landing page (parallex, spline (read description), basic styling and animations for user interactions)
+- login page
+- register user page
+- user portal
+- admin management panel
+
+User (requires login):
+- Dashboard
+- For flights, hotels, taxis implement:
+	a. Search (show availability status for each flight, hotel, taxi)
+	b. Booking (form)
+	c. Cancelation (form or button)
+	e. AI recommendations
+	e. Display booking confirmation and details to users (confirm to the user his flight? or confirm the flight before payment?)
+
+Admin (requires admin access):
+- Dashboard
+- Airport management page
+- Flights management page
+- Hotels management page
+- Taxis management page
+- Users management page
+
+AI Trip Planner Bot:
+- Integrate OpenAI model using API Keys
+- Read bookings and provide trip plans based on flight, hotel and bookings
+- Implement the trip planning algorithm in PHP
+- Create a chatbot interface for user interactions
+Ask Chris Which one?
+- Allow the bot to provide trip plans based on flight, hotel, and taxi bookings.
+- Use OpenAI to suggest trip plans considering flight schedules, hotel availability, and taxi services.
+- Implement recommendations for hotels, car rentals, and tourist attractions at the destination.
+
+Notes:
+- Enable dynamic content updates using DOM manipulation
+- Validate all forms
+- Create airplane animations for takeoff, landing and in-flight views
+- Add interactive elements to spline scenes
+- Validate data on the backend for each request, and implement integrity constraints
+- create .env file to store credentials and sensitive information
+- Ensure Spline interactions are integrated with the frontend logic (ask chris?)
+- Test all features thoroughly...
+
+Database Tables:
+- Cities (links to airports, flights, hotels, taxis)
+- Airports
+- Flights (add capacity and reserved_seats rows)
+- Bookings
+- Hotels (add capacity and reserved_rooms rows, special feature: check which rooms can be booked individually)
+- Rooms (optional)
+- Taxis
+- Users
+- Chats_Users (for all users)
+- Chats (for each user)
+
+Software Architecture
+- Create the project Architecture following the c4 model.
+
+
+
+
+
+
+### Private APIs/Layers:
+	1. Gateway:
+		a. Routes Requests: **Done for GET** **Done for all**
+		b. Checks for authentication
+		c. Checks if user token is expired and redirects them to the user login page
+
+	Chat API (GET & POST): (Maybe add SSH connection to secure transactions between FE and BE? Because only the FE client should be able to access this API, not even the user or admin)
+	- Add conversation to db
+	- Retreive conversation from db
+=
+### Public APIs/Layers:
+	1. flights, hotels, taxis, airports (/api/):
+		a. Read: Done
+		b. Create: 
+		c. Update: 
+		d. Delete: 
+
+	2. Users (/api/users):
+		a. Read: Done
+		b. Create:
+		c. Update: 
+		d. Delete:
+		
+	3. All bookings (only accept requests from logged-in user, APIs should check if logged-in user matches user id in the request, check if user ID matches user in JWT token )  (flight, hotels, taxis):
+		a. Read: Done
+		b. Create:
+		c. Update: ***DO NOT IMPLEMENT***
+		d. Delete:
+
+	4. Search: (By category, or city, expand to allow for multiple parameters?)
+		a. Read: Done for single parameter, default limit = 10.
+
+	5. Authentication API (POST /api/auth):
+		a. Triggered only when logging in or after creating a new account
+		b. Checks if credentials are valid
+		c. Returns JWT token for existing users that are logging in, otherwise returns new token for newly registered users (only after creating new user)
+		d. Stores the JWT token in localStorage (on the frontend)
+
+	
+//me   get city for user condition when booking private only chat bot can access 
+	Chatbot API to get user data:
+	- Get user data to be able to provide recommendations based on user data
+	6. Chatbot API to get user data:
+		a. Get user data to be able to provide recommendations based on user data
+
+
+*********************************************
+	Authentication/Authorization requirements:
+	- No authentication: 
+		a. /api/users (POST)
+		b. /api/auth (POST)
+		c. Search (/api/flights || /api/hotels || /api/taxis) (any city)
+	- User level: 
+		a. Chatbot API (requires the user to be logged-in in order to access user data based on user ID)
+		b. User information: 
+			1. (GET, PUT, DELETE) /api/users?id=
+		c. User bookings (Implement logic to check if user ID in url param matches user in JWT and only accept those requests):
+			1. (GET, POST, DELETE) /api/flight_bookings?user_id=
+			2. (GET, POST, DELETE) /api/hotel_bookings?user_id=
+			3. (GET, POST, DELETE) /api/taxi_bookings?user_id=
+	- Admin level: 
+		a. Categories: (POST, PUT, DELETE)
+			1. /api/flights
+			2. /api/hotels
+			3. /api/taxis
+		b. Users: /api/users (GET, POST, PUT, DELETE)
+		c. Airports: /api/airports (GET, POST, PUT, DELETE)
+
+*** To implement tomorrow:
+1. BCrypt
+2. Authentication API (to return JWT token upon registration or after login)
+3. Authentication validator (for gateway)
+4. Authorization levels, and logic to check if user is either admin or not
+5. most other read update delete methods
+6. Add logic to switch to Admin panel if user is admin (by checking JWT token)
+7. Split openAI controller into mvc
+// dates?
+// 
+
+
+extraaaaa
+*** For Tuesday
+1. Refactor into classes
+2. Create and validate requests against DTOs
+3. Add ORM
+4. Document APIs
+5. Create dynamic url that accept different order of parameters
+
+***********************************************************
+
+Responsibilities of controllers, services, and models in an application. 
+
+This separation of concerns is a common architectural pattern, often associated with the Model-View-Controller (MVC) pattern and its variants.
+
+Controller:
+
+- Acts as an interface between the user interface (or client requests) and the application logic
+- Handles incoming requests (e.g., HTTP requests in web applications)
+- Processes input data and validates it at a basic level
+- Calls appropriate services to perform business logic
+- Prepares and returns the response (e.g., JSON data, HTML, redirects)
+- Does not contain business logic itself
+- Manages the flow of the application
+
+Service:
+
+- Contains the core business logic of the application
+- Performs complex operations and computations
+- Coordinates between multiple models if necessary
+- Implements application-specific rules and workflows
+- Can call other services if needed
+- Often used to keep controllers thin and focused on request handling
+- Provides a layer of abstraction between controllers and models
+
+Model:
+
+- Represents the data structure of the application
+- Defines how data is stored, retrieved, and manipulated
+- Implements data validation rules
+- Interacts directly with the database or data storage
+- Can include simple query methods, but complex queries often go in services
+- Should be independent of the user interface
+
+This separation of concerns offers several benefits:
+
+- Improved maintainability: Changes in one layer don't necessarily affect others
+- Better testability: Each component can be tested in isolation
+- Increased reusability: Services and models can be used by multiple controllers
+- Clearer organization: Each part of the application has a distinct role
+
+In practice, the boundaries between these components can sometimes blur, especially in smaller applications. However, maintaining this separation as much as possible generally leads to more scalable and manageable code.
