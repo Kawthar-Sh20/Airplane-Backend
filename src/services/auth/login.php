@@ -13,12 +13,11 @@ class LoginService {
     }
     
     public function login($email, $password) {
-        $user = $this->model->getUserByUsername($email);
-
+        $user = $this->model->getUserByEmail($email);
         if (!$user || !password_verify($password, $user['password'])) {
             return ['success' => false];
         }
-    
+        
         $token = $this->loginHelper->generateJWT($user);
         return ['success' => true, 'token' => $token];
     }

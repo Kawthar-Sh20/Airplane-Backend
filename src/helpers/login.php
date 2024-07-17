@@ -21,3 +21,5 @@ class LoginHelper {
         return JWT::encode($payload, $secretKey, 'HS256');
     }
 }
+
+// expire the token after pressing logout

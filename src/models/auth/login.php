@@ -8,7 +8,7 @@ class LoginModel {
         $this->db = dbConnect();
     }
 
-    public function getUserByUsername($email) {
+    public function getUserByEmail($email) {
         $stmt = $this->db->prepare("SELECT id_user, name, password, email, role FROM users WHERE email = ?");
         
         // Bind the username parameter
@@ -31,6 +31,5 @@ class LoginModel {
 
     public function __destruct() {
         $this->db->close();
-        echo "<br>  DB connection closed! <br>   ";
     }
 }

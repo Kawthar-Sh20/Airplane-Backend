@@ -22,7 +22,7 @@ class RegisterModel {
     }
 
     public function createUser($name, $email, $phone, $password) {
-        $role = 'user';
+        $role = 'customer';
 
         $stmt = $this->db->prepare("INSERT INTO users (name, email, phone_number, password, role) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("sssss", $name, $email, $phone, $password, $role);
