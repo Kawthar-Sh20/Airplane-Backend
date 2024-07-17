@@ -23,7 +23,8 @@ $allowedEndpoints = [
     'flight_bookings',
     'hotel_bookings',
     'taxi_bookings',
-    'openai'
+    'openai',
+    'chats'
     
 ];
 

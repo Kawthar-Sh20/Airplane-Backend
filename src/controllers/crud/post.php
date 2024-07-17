@@ -2,9 +2,13 @@
 define('ROOT_PATH', dirname(__DIR__, 2)); // Adjust this if necessary
 
 // Use the absolute path to require the connection.php file
-require "src/helpers/connection.php";
-require_once "src/models/crud/model.php";
-
+require ROOT_PATH . "../../src/helpers/connection.php";
+require_once ROOT_PATH . "../../src/models/crud/model.php";
+$conn = dbConnect();
+// Ensure the connection is established
+if (!isset($conn) || !$conn) {
+    die("Database connection not established");
+}
 // Extract request URI and segments
 $requestUri = $_SERVER['REQUEST_URI'];
 $requestUri = strtok($requestUri, '?');
@@ -27,7 +31,6 @@ $value = $_GET[$param] ?? null;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $rawInputData = file_get_contents("php://input");
     $inputData = json_decode($rawInputData, true);
-
     if (!empty($inputData) && is_array($inputData)) {
         // Handle insertion
         $sql = selectModel::insert($table_name, $inputData);

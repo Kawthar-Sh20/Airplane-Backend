@@ -2,7 +2,7 @@
 
 class selectModel {
     private static $allowedColumns = ['id', 'rating', 'city', 'country', 'name', 'description', 'id_airport', 'id_user', 'id_flight', 'id_taxi'];
-    private static $allowedTables = ['hotels', 'flights', 'airpots', 'users', 'taxis', 'hotel_bookings', 'flight_bookings', 'taxi_bookings'];
+    private static $allowedTables = ['hotels', 'chats', 'flights', 'airpots', 'users', 'taxis', 'hotel_bookings', 'flight_bookings', 'taxi_bookings'];
 
     public static function isValidColumn($column) {
         return in_array($column, self::$allowedColumns);
