@@ -24,6 +24,7 @@ class selectService {
 			}
 			echo json_encode(["data" => $rows]);
 		} else {
+			http_response_code(404);
 			echo json_encode(["message" => "Item not found"]);
 		}
 	}
@@ -43,6 +44,7 @@ class selectService {
 			}
 			echo json_encode(["data" => $rows]);
 		} else {
+			http_response_code(404);
 			echo json_encode(["message" => "Items not found"]);
 		}
 	}
@@ -58,6 +60,7 @@ class selectService {
         if (mysqli_query($conn, $sql)) {
             echo json_encode(["message" => "Record inserted successfully"]);
         } else {
+			http_response_code(404);
             echo json_encode(["message" => "Error inserting record: " . mysqli_error($conn)]);
         }
     }
@@ -77,6 +80,7 @@ class selectService {
 		if ($stmt->affected_rows > 0) {
 			echo json_encode(["message" => "Record deleted successfully"]);
 		} else {
+			http_response_code(404);
 			echo json_encode(["message" => "Item not found or could not be deleted"]);
 		}
 	}
