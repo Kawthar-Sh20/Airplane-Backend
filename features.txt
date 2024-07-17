@@ -138,6 +138,9 @@ Software Architecture
 4. Authorization levels, and logic to check if user is either admin or not
 5. most other read update delete methods
 6. Add logic to switch to Admin panel if user is admin (by checking JWT token)
+7. Split openAI controller into mvc
+// dates?
+// 
 
 
 extraaaaa

@@ -6,18 +6,22 @@ loadEnv(__DIR__ . '/.env');
 
 use Firebase\JWT\JWT;
 
-class loginService {
+class LoginService {
     private $secretKey;
-    
+    private $model;
 
-    public function login($username, $password) {
-        $user = loginModel::getUserByUsername($username);
+    public function __construct() {
+        $this->model = new LoginModel();
+    }
+
+    public function login($email, $password) {
+        $user = this->model->getUserByUsername($email);
 
         if (!$user || !password_verify($password, $user['password'])) {
             return ['success' => false];
         }
     
-        $token = generateJWT($user);
+        $token = this->generateJWT($user);
         return ['success' => true, 'token' => $token];
     }
 
