@@ -1,25 +1,15 @@
 <?php
+require_once 'src/helpers/connection.php';
 
 class LoginModel {
     private $db;
 
     public function __construct() {
-        $host = getenv('DB_HOST');
-        $username = getenv('DB_USERNAME');
-        $password = getenv('DB_PASSWORD');
-        $database = getenv('DB_NAME');
-
-        $this->db = new mysqli($host, $username, $password, $database);
-
-        if ($this->db->connect_error) {
-            die("Connection failed: " . $this->db->connect_error);
-        } else {
-            echo 'connected successfully <br>';
-        }
+        $this->db = dbConnect();
     }
 
     public function getUserByUsername($email) {
-        $stmt = $this->db->prepare("SELECT id, username, password_hash, email, role FROM users WHERE email = ?");
+        $stmt = $this->db->prepare("SELECT id_user, name, password, email, role FROM users WHERE email = ?");
         
         // Bind the username parameter
         $stmt->bind_param("s", $email);
@@ -32,7 +22,7 @@ class LoginModel {
 
         // Fetch the user data
         $user = $result->fetch_assoc();
-
+        
         // Close the statement
         $stmt->close();
 
@@ -41,5 +31,6 @@ class LoginModel {
 
     public function __destruct() {
         $this->db->close();
+        echo "<br>  DB connection closed! <br>   ";
     }
 }

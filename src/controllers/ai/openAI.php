@@ -1,6 +1,7 @@
 <?php 
-require "../../connection.php";
+require_once 'src/helpers/connection.php';
 
+$conn = dbConnect();
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $id = $_GET['id'];
     $stmt = $conn->prepare('SELECT c.name, f.id_flight_booking 

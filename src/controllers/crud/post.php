@@ -2,9 +2,8 @@
 define('ROOT_PATH', dirname(__DIR__, 2)); // Adjust this if necessary
 
 // Use the absolute path to require the connection.php file
-require_once ROOT_PATH . "/connection.php";
-require_once ROOT_PATH . "/src/services/service.php";
-require_once ROOT_PATH . "/src/models/model.php";
+require "src/helpers/connection.php";
+require_once "src/models/crud/model.php";
 
 // Extract request URI and segments
 $requestUri = $_SERVER['REQUEST_URI'];
