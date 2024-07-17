@@ -1,24 +1,32 @@
 <?php 
 require_once 'src/helpers/connection.php';
 
+
 $conn = dbConnect();
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
-    $id = $_GET['id'];
-    $stmt = $conn->prepare('SELECT c.name, f.id_flight_booking 
-                            FROM flight_bookings f 
-                            JOIN cities c 
-                            ON f.arrival_city_id = c.id_city
-                            WHERE f.id_flight_booking = ?;');
-    $stmt->bind_param('i', $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $city = $result->fetch_assoc();
-        echo json_encode(["city" => $city]);
+    if (isset($_GET['id_flight_booking'])) {
+        $id_flight_booking = $_GET['id_flight_booking'];
+        
+        // Prepare statement with correct table names
+        $stmt = $conn->prepare('SELECT name FROM cities WHERE id_city = (SELECT arrival_city_id FROM flight_bookings WHERE id_flight_booking = ?);');
+        if ($stmt === false) {
+            die('Prepare failed: ' . $conn->error);
+        }
+        
+        $stmt->bind_param('i', $id_flight_booking);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            $city = $result->fetch_assoc();
+            echo json_encode(["city" => $city]);
+        } else {
+            echo json_encode(["message" => "no records were found"]);
+        }
     } else {
-        echo json_encode(["message" => "no records were found"]);
+        echo json_encode(["message" => "Missing id_flight_booking parameter"]);
     }
-} elseif ($_SERVER['REQUEST_METHOD'] == "POST") {
+}elseif ($_SERVER['REQUEST_METHOD'] == "POST") {
     $user_id = $_POST['user_id'];
     $chat_user_id = $_POST['chat_user_id'];
     $message = $_POST['message'];
@@ -37,4 +45,4 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 } else {
     echo json_encode(["error" => "Wrong request method"]);
 }
-?>
+

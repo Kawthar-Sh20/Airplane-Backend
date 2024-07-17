@@ -22,7 +22,9 @@ $allowedEndpoints = [
     'taxis',
     'flight_bookings',
     'hotel_bookings',
-    'taxi_bookings'
+    'taxi_bookings',
+    'openai'
+    
 ];
 
 $requestMethod = $_SERVER['REQUEST_METHOD'];
@@ -33,7 +35,7 @@ if (strpos($requestUri, $apiBasePath) === 0) {
     
     if (in_array($endpoint, $allowedEndpoints)) {
         if ($endpoint === 'openai' && $requestMethod === 'GET') {
-            require __DIR__ . '/src/controllers/ai/openAI.php';
+            require __DIR__ . '/src/controllers/ai/openai.php';
         } elseif ($endpoint === 'auth/login' || $endpoint === 'auth/register') {
             if ($requestMethod === 'POST') {
                 if ($endpoint === 'auth/login') {
