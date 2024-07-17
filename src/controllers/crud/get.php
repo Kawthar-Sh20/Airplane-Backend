@@ -1,7 +1,8 @@
 <?php
-require "connection.php";
-require "src/services/get.php";
+require "src/helpers/connection.php";
+require "src/services/crud/get.php";
 
+$conn = dbConnect();
 $requestUri = $_SERVER['REQUEST_URI'];
 $requestUri = strtok($requestUri, '?');
 parse_str($_SERVER['QUERY_STRING'], $queryParams);

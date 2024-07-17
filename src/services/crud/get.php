@@ -1,8 +1,8 @@
 <?php
-
-require 'src/models/model.php';
+require 'src/models/crud/model.php';
 
 class selectService {
+	// split this into query stuff into model and sanitize and validate inputs in the service here and return the results in json or error here
 	public static function select($conn, $table, $param, $value, $limit = null) {
 		if (!selectModel::isValidColumn($param)) {
             die("Invalid column name");
@@ -30,6 +30,7 @@ class selectService {
 
 	public static function selectAll($conn, $table, $limit = null) {
 		$query = selectModel::selectAll($table);
+		
 		$stmt = $conn->prepare($query);
 		$stmt->execute();
 		$result = $stmt->get_result();
