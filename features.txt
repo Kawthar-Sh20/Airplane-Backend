@@ -112,9 +112,9 @@ Software Architecture
 *********************************************
 	Authentication/Authorization requirements:
 	- No authentication: 
-		a. /api/users (POST)
-		b. /api/auth (POST)
-		c. Search (/api/flights || /api/hotels || /api/taxis) (any city)
+		a. /api/auth/login (POST)
+		b. /api/auth/register (POST)
+		c. /api/flights || /api/hotels || /api/taxis || /api/cities (GET)
 	- User level: 
 		a. Chatbot API (requires the user to be logged-in in order to access user data based on user ID)
 		b. User information: 
@@ -132,15 +132,13 @@ Software Architecture
 		c. Airports: /api/airports (GET, POST, PUT, DELETE)
 
 *** To implement tomorrow:
-1. BCrypt
-2. Authentication API (to return JWT token upon registration or after login)
-3. Authentication validator (for gateway)
-4. Authorization levels, and logic to check if user is either admin or not
-5. most other read update delete methods
-6. Add logic to switch to Admin panel if user is admin (by checking JWT token)
+1. BCrypt *** DONE ***
+2. Authentication API (to return JWT token upon registration or after login) *** DONE ***
+3. Authentication validator (for gateway) *** DONE ***
+4. Authorization levels, and logic to check if user is either admin or not *** DONE ***
+5. Add logic to switch to Admin panel if user is admin (by checking JWT token) *** DONE ***
+6. most other read update delete methods
 7. Split openAI controller into mvc
-// dates?
-// 
 
 
 extraaaaa
