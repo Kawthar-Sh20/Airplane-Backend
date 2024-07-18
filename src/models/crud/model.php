@@ -1,8 +1,8 @@
 <?php
 
 class selectModel {
-    private static $allowedColumns = ['id', 'rating', 'cities', 'country', 'name', 'description', 'id_airport', 'id_user', 'id_flight', 'id_taxi'];
-    private static $allowedTables = ['hotels', 'chats', 'flights', 'airpots', 'users', 'taxis', 'hotel_bookings', 'flight_bookings', 'taxi_bookings'];
+    private static $allowedColumns = ['id', 'rating', 'country', 'name', 'description', 'id_airport', 'id_user', 'id_flight', 'id_taxi'];
+    private static $allowedTables = ['hotels', 'chats', 'flights', 'airports', 'users', 'taxis', 'hotel_bookings', 'flight_bookings', 'taxi_bookings'];
 
     public static function isValidColumn($column) {
         return in_array($column, self::$allowedColumns);
